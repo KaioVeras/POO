@@ -24,7 +24,13 @@ public class Compras {
         return valor;
     }
     
-//    public double getDesconto() {;
-//        // Calcular desconto de 10%
-//    }
+    public String getDesconto() {
+        // Calcular desconto de 10%
+        if(this.valor > 500) {
+            double valorComDesconto = this.valor - (this.valor * 10 / 100);
+            return "Valor da compra com desconto de 10%: R$" + valorComDesconto;
+        } else {
+           return "Desconto indisponível para essa compra!!";
+        }
+    }
 }
