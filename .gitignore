@@ -1,6 +1,14 @@
+# macOS
+.DS_Store
+
+# NetBeans
 /Aulas/aula001/AulaPoo001/nbproject/private/
 /Aulas/aula002/AtvAulaPoo002/nbproject/private/
 /Aulas/aula002/AulaPoo002/nbproject/private/
+/Aulas/aula003/AulaPoo003/nbproject/private/
 /Aulas/aula002/AulaPoo002/build/
 /Aulas/aula002/AtvAulaPoo002/build/
-/Aulas/aula003/AulaPoo003/nbproject/private/
+nbproject/private/
+build/
+dist/
+*.class
