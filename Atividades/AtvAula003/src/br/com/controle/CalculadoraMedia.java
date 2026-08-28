@@ -24,26 +24,23 @@ package br.com.controle;
 
 
 public class CalculadoraMedia {
-    private double valor;
-            int valorQuantidade;
-            double novoValor;
-            double mediaValor;
-            
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
+    private double soma;
+    private int valorQuantidade;         
     
-    public int somarNumeros() {
-        
-        this.novoValor = this.novoValor + this.valor;
-        this.valorQuantidade = this.valorQuantidade + 1;
-        
-        return this.valorQuantidade;
+    public void somarNumeros(double valor) {
+        soma += valor;
+        valorQuantidade++;
     }
     
     public double media() {
-        this.mediaValor = this.novoValor / this.valorQuantidade;
-        return this.mediaValor;
+        if(valorQuantidade == 0) {
+            return 0;
+        }
+        
+        return soma / valorQuantidade;
     }
     
+    public int getQuantidade() {
+        return valorQuantidade;
+    }   
 }
