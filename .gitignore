@@ -15,3 +15,7 @@ dist/
 *.class
 /Atividades/AtvAula003/nbproject/private/
 /Aulas/aula004/AulaPoo004/nbproject/private/
+
+# IntelliJ IDEA — arquivos locais da IDE
+.idea/
+*.iml
