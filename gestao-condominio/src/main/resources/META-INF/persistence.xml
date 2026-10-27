@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+  <persistence-unit name="condominio" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>br.edu.catolica.ucb.poo.model.Condominio</class>
+    <class>br.edu.catolica.ucb.poo.model.Unidade</class>
+    <class>br.edu.catolica.ucb.poo.model.Cobertura</class>
+    <class>br.edu.catolica.ucb.poo.model.Morador</class>
+    <class>br.edu.catolica.ucb.poo.model.Funcionario</class>
+    <class>br.edu.catolica.ucb.poo.model.Zelador</class>
+    <class>br.edu.catolica.ucb.poo.model.MovimentacaoFinanceira</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.jdbc.time_zone" value="UTC"/>
+    </properties>
+  </persistence-unit>
+</persistence>

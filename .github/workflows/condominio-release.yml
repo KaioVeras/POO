@@ -1,0 +1,65 @@
+name: Condomínio - Testes e pacotes v1
+
+on:
+  push:
+    branches: [main, feat/gestao-condominio]
+    paths: ['gestao-condominio/**', '.github/workflows/condominio-release.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pacotes:
+    name: Pacote ${{ matrix.nome }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2022
+            nome: Windows-x64
+          - os: macos-15
+            nome: macOS-Apple-Silicon
+          - os: macos-15-intel
+            nome: macOS-Intel
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: gestao-condominio/pom.xml
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compilar e testar
+        working-directory: gestao-condominio
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            ./mvnw.cmd --batch-mode package
+          else
+            ./mvnw --batch-mode package
+          fi
+      - name: Criar ZIP completo
+        working-directory: gestao-condominio
+        run: python scripts/empacotar.py
+      - name: Criar pacote nativo e testar o runtime incluído
+        working-directory: gestao-condominio
+        run: python scripts/empacotar_nativo.py
+      - name: Testar novamente depois de extrair o ZIP nativo
+        working-directory: gestao-condominio
+        shell: bash
+        run: |
+          python -c "from pathlib import Path; import zipfile; p=next(Path('entrega').glob('GoldenJava-*.zip')); zipfile.ZipFile(p).extractall('work/extraido')"
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            chmod +x work/extraido/GoldenJava/GoldenJava.app/Contents/Resources/runtime/bin/*
+          fi
+          python scripts/verificar_nativo.py work/extraido/GoldenJava
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.nome }}
+          path: gestao-condominio/entrega/*.zip
+          retention-days: 14

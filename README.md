@@ -31,7 +31,7 @@ O que você encontra aqui: exemplos incrementais em Java, organizados do básico
 
 | Trabalho | Descrição | Conceitos Utilizados |
 | --- | --- | --- |
-| — | Os trabalhos serão adicionados ao longo do semestre. | — |
+| [Residencial Golden Java](gestao-condominio/README.md) | Gestão de condomínio pelo terminal, com banco relacional e pacote de entrega. | Encapsulamento, herança, polimorfismo, JPA e transações. |
 
 ## Organização dos Projetos
 
