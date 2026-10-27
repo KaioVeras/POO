@@ -1,10 +1,10 @@
 # Residencial Golden Java
 
-Projeto de Programação Orientada a Objetos — Grupo 02: Kaio Veras e Emanuel Veloso.
+Projeto de Programação Orientada a Objetos - Grupo 02: Kaio Veras e Emanuel Veloso.
 
 Sistema de gestão de condomínio pelo terminal. Permite consultar condomínio, unidades, moradores e funcionários; calcular taxas e multas; registrar pagamentos e despesas; simular arrecadação e consultar o histórico financeiro. Os registros ficam em banco relacional.
 
-**v1.0.0 — fase inicial:** núcleo e persistência prontos; cadastros/edições ainda não fazem parte do menu. Veja [o que está pronto e o que falta](docs/estado-do-projeto.md), o [guia de estudo](docs/guia-de-estudo.md) e a [explicação da conexão e do H2](docs/banco-de-dados.md).
+**v1.0.0 - fase inicial:** núcleo e persistência prontos; cadastros/edições ainda não fazem parte do menu. Veja [o que está pronto e o que falta](docs/estado-do-projeto.md), o [guia de estudo](docs/guia-de-estudo.md) e a [explicação da conexão e do H2](docs/banco-de-dados.md).
 
 ## Baixar a versão pronta
 
