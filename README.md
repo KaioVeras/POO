@@ -48,11 +48,11 @@ Os arquivos `.form` são do editor visual do NetBeans e não são necessários p
 
 ## Como Executar
 
-### Opção 1 — Apache NetBeans (recomendado)
+### Opção 1 - Apache NetBeans (recomendado)
 
 Cada pasta dentro de `Aulas/` é um projeto do NetBeans. Basta abrir o projeto desejado (`File > Open Project`) e executar com `F6`.
 
-### Opção 2 — Terminal
+### Opção 2 - Terminal
 
 Compile os pacotes e execute a tela principal do projeto:
 
