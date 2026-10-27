@@ -1,0 +1,72 @@
+name: Condomínio - Publicar release verificada
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Run de build com os três pacotes verificados
+        required: true
+        default: '40483357602'
+      commit:
+        description: Commit exato compilado pelo run
+        required: true
+        default: b7c8873bbc03c0fb5dd7b2870f4c8b278851268e
+      tag:
+        description: Tag da release
+        required: true
+        default: condominio-v1.0.0
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: condominio-publicar-release
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RUN_ID: ${{ inputs.run_id }}
+      COMMIT: ${{ inputs.commit }}
+      TAG: ${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Conferir origem e sucesso dos testes
+        shell: bash
+        run: |
+          test "$(gh run view "$RUN_ID" --json headSha --jq .headSha)" = "$COMMIT"
+          test "$(gh run view "$RUN_ID" --json conclusion --jq .conclusion)" = success
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.run_id }}
+          path: artefatos
+      - name: Conferir arquivos e preparar downloads
+        shell: bash
+        run: |
+          mkdir release-files
+          cp artefatos/Windows-x64/grupo_2_projeto.zip release-files/
+          cp artefatos/Windows-x64/GoldenJava-1.0.0-windows-x64.zip release-files/
+          cp artefatos/macOS-Apple-Silicon/GoldenJava-1.0.0-macos-arm64.zip release-files/
+          cp artefatos/macOS-Intel/GoldenJava-1.0.0-macos-x64.zip release-files/
+          for arquivo in release-files/*.zip; do unzip -tq "$arquivo"; done
+          cd release-files
+          sha256sum *.zip > SHA256SUMS.txt
+      - name: Publicar release com todos os arquivos
+        shell: bash
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            test "$(gh release view "$TAG" --json isDraft --jq .isDraft)" = true
+          else
+            gh release create "$TAG" --target "$COMMIT" --draft \
+              --title 'Residencial Golden Java v1.0.0 — fase inicial' \
+              --notes-file .github/release-notes/condominio-v1.0.0.md
+          fi
+          gh release upload "$TAG" release-files/*.zip release-files/SHA256SUMS.txt --clobber
+          gh release edit "$TAG" --draft=false --latest
+          test "$(gh release view "$TAG" --json assets --jq '.assets | length')" = 5
+          gh release view "$TAG" --json url,assets
