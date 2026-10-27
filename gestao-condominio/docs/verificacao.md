@@ -1,6 +1,16 @@
 # Registro de implementação e verificação
 
-Data: 26/10/2026. Branch: `feat/gestao-condominio`. Sem commit ou publicação automática.
+Implementação inicial: 26/10/2026. Preparação da publicação v1: 27/10/2026.
+
+## Validação dos executáveis da release
+
+O [workflow 40437547820](https://github.com/KaioVeras/POO/actions/runs/40437547820) passou nos três sistemas: Windows x64, Mac Apple Silicon e Mac Intel. Cada job compilou o projeto com Java Temurin 17, executou os testes locais, gerou o ZIP completo e o pacote nativo com Java incluído, extraiu o ZIP nativo e executou novamente o teste de pagamento, despesa e persistência.
+
+Essa validação resolve a limitação anterior de não ter executado no Windows/JDK 17. O teste nativo também verifica o diretório padrão do banco quando o programa é iniciado de outra pasta, sem DB_URL configurado. No Mac, os dados de uso ficam no Application Support do usuário, evitando depender do diretório do bundle baixado.
+
+Os testes dos pacotes verificam a execução real do binário/runtime, mas não simulam a confirmação interativa de segurança do Windows/macOS nem substituem um teste manual no computador da faculdade. Os pacotes não têm assinatura comercial/notarização.
+
+Na revisão de distribuição foram corrigidos dois pontos: o diretório gravável dos dados no Mac e a inclusão de `jdk.localedata` no runtime reduzido para manter a formatação brasileira dos valores. Não houve mudança nas regras de negócio.
 
 ## Implementado
 
@@ -41,6 +51,6 @@ Após corrigir, toda a suíte com MySQL passou. Não ficaram achados da revisão
 
 O teste MySQL exige base descartável com os dados iniciais e caixa zerado. Configure `BANCO=mysql`, `DB_URL`, `DB_USER`, `DB_PASSWORD` e `TESTAR_MYSQL=true` no ambiente antes de executar `./mvnw test`. Ele registra pagamento e despesa; **não use uma base com registros que queira preservar**.
 
-## Limitações da verificação
+## Limitações da verificação inicial (antes do workflow da release)
 
-Não houve execução nativa em Windows nem em um JDK 17 instalado; o alvo de compilação é 17 e a execução local usou JDK 26. Não foi testada transferência automática entre H2 e MySQL, pois essa função não faz parte do projeto. Mudanças no código exigem recompilar e gerar novamente a entrega.
+Na implementação inicial, a execução local usou JDK 26 com alvo 17 e não havia execução nativa Windows; posteriormente os três ambientes foram validados no workflow acima. Não foi testada transferência automática entre H2 e MySQL, pois essa função não faz parte do projeto. Mudanças no código exigem recompilar e gerar novamente a entrega.
