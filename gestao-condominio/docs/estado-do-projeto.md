@@ -1,4 +1,4 @@
-# Estado do projeto — v1.0.0 (fase inicial)
+# Estado do projeto - v1.0.0 (fase inicial)
 
 ## O que esta versão entrega
 
