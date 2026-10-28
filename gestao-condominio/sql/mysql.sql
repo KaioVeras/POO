@@ -1,5 +1,3 @@
--- Executar em um banco NOVO chamado gestao_condominio (MySQL 8.4+).
--- Não apaga tabelas nem altera um banco que já tenha sido utilizado.
 CREATE DATABASE IF NOT EXISTS gestao_condominio CHARACTER SET utf8mb4;
 USE gestao_condominio;
 
@@ -12,13 +10,15 @@ CREATE TABLE condominios (
     saldo_caixa DECIMAL(12,2) NOT NULL
 );
 CREATE TABLE unidades (
-    numero INT PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
+    numero INT,
     tipo VARCHAR(20) NOT NULL,
     taxa_base DECIMAL(12,2) NOT NULL,
     ocupada BOOLEAN NOT NULL
 );
 CREATE TABLE moradores (
-    cpf VARCHAR(11) PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cpf VARCHAR(11) UNIQUE,
     nome VARCHAR(100) NOT NULL,
     unidade_numero INT NOT NULL,
     FOREIGN KEY (unidade_numero) REFERENCES unidades(numero)
