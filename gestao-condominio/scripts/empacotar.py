@@ -26,7 +26,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='golden-java-') as temporario:
         pacote = Path(temporario) / 'gestao-condominio'
         pacote.mkdir()
-        for nome in ('src', 'docs', 'sql', 'scripts', '.mvn'):
+        for nome in ('src', 'docs', 'sql', 'scripts', '.mvn', 'atividades'):
             shutil.copytree(raiz / nome, pacote / nome)
         for nome in ('pom.xml', 'README.md', 'LICENSE', '.gitignore', 'mvnw', 'mvnw.cmd', 'iniciar.sh', 'iniciar.bat'):
             shutil.copy2(raiz / nome, pacote / nome)

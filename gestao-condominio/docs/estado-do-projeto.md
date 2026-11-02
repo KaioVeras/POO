@@ -61,3 +61,9 @@ Cada parte deve incluir explicação, execução e testes. Evitar acrescentar to
 7. Os testes: comparar cenários com resultados esperados.
 
 O diagnóstico inicial fica preservado como histórico; este documento e o README descrevem a versão atual. A release fixa o código e os downloads de uma etapa. Novas funcionalidades devem formar outra versão, sem substituir silenciosamente a v1.
+
+## Materiais complementares — 02/11/2026
+
+O [índice da entrega](entregas/2026-11-02/README.md) reúne o PDF enviado pelo grupo, as orientações fotografadas, os diagramas e a atividade independente de Collections. A proposta geral do PDF inclui funções futuras; a atividade de Collections não modifica o menu nem os dados da aplicação principal.
+
+O SQL da branch principal já recebeu um início de alteração para acrescentar IDs a unidades e moradores. Ainda é necessário alinhar entidades Java, chaves estrangeiras e INSERTs. Essa adaptação fica pendente para a etapa dos feedbacks do professor; para reproduzir o MySQL da v1 validada, use os arquivos da release ou da tag `condominio-v1.0.0`.

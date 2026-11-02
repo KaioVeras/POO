@@ -2,7 +2,7 @@
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white)
 ![Uso educacional](https://img.shields.io/badge/Uso-Educacional-success)
-![Última atualização](https://img.shields.io/badge/%C3%9Altima%20atualiza%C3%A7%C3%A3o-21%2F08%2F2026-blue)
+![Última atualização](https://img.shields.io/badge/%C3%9Altima%20atualiza%C3%A7%C3%A3o-02%2F11%2F2026-blue)
 
 Conteúdo em Java organizado por aulas, com foco em programação orientada a objetos, interfaces gráficas com Swing e separação de responsabilidades entre controle e visão.
 
@@ -28,6 +28,8 @@ O que você encontra aqui: exemplos incrementais em Java, organizados do básico
 | Aula 03 | Sistema de vendas (em andamento). | 2026-08-21 |
 
 ## Trabalhos práticos
+
+**Para consulta do professor — Grupo 02:** [documentação, orientações e diagramas](gestao-condominio/docs/entregas/2026-11-02/README.md) · [programa de Collections (item 05)](gestao-condominio/atividades/collections/App.java) · [como executar Collections](gestao-condominio/atividades/collections/README.md).
 
 | Trabalho | Descrição | Conceitos Utilizados |
 | --- | --- | --- |
@@ -76,7 +78,7 @@ Observação: as telas Swing precisam de ambiente gráfico para serem exibidas.
 
 ## Atualização
 
-Última atualização: 21/08/2026
+Última atualização: 02/11/2026 — organização da documentação e da atividade complementar de Collections do Grupo 02.
 
 ## Autor
 

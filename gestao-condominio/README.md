@@ -10,6 +10,14 @@ Sistema de gestão de condomínio pelo terminal. Permite consultar condomínio, 
 - [Guia de estudo](docs/guia-de-estudo.md)
 - [Conexão banco e H2](docs/banco-de-dados.md).
 
+## Materiais para avaliação do professor
+
+- [Índice da entrega organizada em 02/11/2026](docs/entregas/2026-11-02/README.md): PDF enviado, foto das orientações, diagramas e conferência dos itens.
+- [Atividade de Collections — App.java](atividades/collections/App.java): programa isolado do item 05; [instruções de execução e explicação](atividades/collections/README.md).
+- [App.java do sistema principal](src/main/java/br/edu/catolica/ucb/poo/App.java): inicialização da aplicação integrada com JPA e banco.
+
+A documentação do grupo contém a proposta geral; o [estado do projeto](docs/estado-do-projeto.md) identifica o que a v1 já implementa. Os materiais complementares estão na branch principal; os downloads da release v1 preservam a entrega publicada anteriormente.
+
 ## Baixar a versão pronta
 
 Na [página de Releases](https://github.com/KaioVeras/POO/releases), a versão `condominio-v1.0.0` disponibiliza o ZIP completo e pacotes de execução Windows e Mac com Java incluído. Para abrir por duplo clique, escolha o pacote do seu sistema e siga [estas instruções](docs/EXECUTAVEIS.md). Extraia a pasta inteira antes de executar.
@@ -68,9 +76,11 @@ Digite valores como `500`, `500.00` ou `500,00`, sem separador de milhar. Multa 
 
 ## Usar MySQL e Workbench
 
+**Situação em 02/11/2026:** o SQL da branch principal recebeu uma alteração parcial para acrescentar IDs a unidades e moradores. O alinhamento com as entidades Java, chaves estrangeiras e INSERTs está pendente para a próxima etapa. Para reproduzir a v1 validada, utilize o [SQL da tag condominio-v1.0.0](https://github.com/KaioVeras/POO/blob/condominio-v1.0.0/gestao-condominio/sql/mysql.sql) ou os arquivos da release. A execução H2 da v1 continua baseada nas entidades atuais.
+
 MySQL é a opção para trabalhar com um servidor e consultar os dados no Workbench. H2 permite distribuir uma demonstração com banco em arquivo. O Workbench é um cliente: ele precisa de um servidor MySQL em execução.
 
-1. Em um servidor MySQL 8.4 ou compatível, abra `sql/mysql.sql` no Workbench e execute em uma base **nova**. O script cria esquema, tabelas e os mesmos dados fictícios. Se o banco já estiver em uso, não execute os INSERTs novamente.
+1. Em um servidor MySQL 8.4 ou compatível, abra o `sql/mysql.sql` da **release v1** no Workbench e execute em uma base **nova**. Use a versão da tag indicada acima enquanto o SQL da branch principal estiver em adaptação. O script validado cria esquema, tabelas e os mesmos dados fictícios. Se o banco já estiver em uso, não execute os INSERTs novamente.
 2. Crie um usuário local ou use um usuário autorizado existente. Troque a senha no exemplo abaixo antes de executá-lo:
 
 ```sql
@@ -155,6 +165,7 @@ src/main/java/br/edu/catolica/ucb/poo/
 src/test/java/                   testes de domínio, terminal e persistência
 sql/                             criação MySQL e, no ZIP, backup H2
 docs/                            explicações e materiais de referência
+atividades/collections/          programa isolado com ArrayList, HashSet e HashMap
 ```
 
 Leia `docs/guia-de-estudo.md` para entender o caminho de uma operação e preparar a apresentação. `docs/banco-de-dados.md` explica H2, MySQL, JDBC, JPA, conexão e tabelas. `docs/estado-do-projeto.md` registra decisões e pendências. O exemplo de loja do professor está preservado em `docs/referencias/loja-jpa-cl.zip`.
