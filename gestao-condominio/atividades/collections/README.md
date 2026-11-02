@@ -1,4 +1,4 @@
-# Collections no condomínio — item 05
+# Collections no condomínio (Item 05)
 
 Programa independente do Grupo 02, de Kaio Veras e Emanuel Veloso, fornecido em **um único arquivo [App.java](App.java)**. Demonstra `ArrayList`, `HashSet` e `HashMap` usando exemplos do Residencial Golden Java.
 
