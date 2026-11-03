@@ -1,23 +1,38 @@
-# Executar a versão 2
+# Executáveis da versão 2.1
 
-Baixe na [release 2.0.0](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.0.0), seção Assets:
+## Qual arquivo baixar
+
+Baixe na [release 2.1.0](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.1.0), na seção Assets:
 
 | Arquivo | Uso |
-|---|---|
-| GoldenJava-2.0.0-windows-x64.zip | Windows Intel/AMD 64 bits; extrair e abrir GoldenJava.exe |
-| GoldenJava-2.0.0-macos-arm64.zip | Mac Apple Silicon; extrair e abrir GoldenJava.app |
-| GoldenJava-2.0.0-macos-x64.zip | Mac Intel; extrair e abrir GoldenJava.app |
-| grupo_2_projeto.zip | Código, testes, documentação, banco e JAR; requer Java 17+ para executar |
+| --- | --- |
+| `GoldenJava-2.1.0-windows-x64.zip` | Windows 64 bits (Intel/AMD). Extraia e abra `GoldenJava.exe`. |
+| `GoldenJava-2.1.0-macos-arm64.zip` | Mac Apple Silicon (M1 ou mais recente). Extraia e abra `GoldenJava.app`. |
+| `GoldenJava-2.1.0-macos-x64.zip` | Mac Intel. Extraia e abra `GoldenJava.app`. |
+| `grupo_2_projeto.zip` | Código, testes, documentação, banco e JAR. Requer Java 17 ou superior instalado. |
 
-Os três pacotes nativos incluem Java e não exigem Maven, servidor MySQL ou comandos para abrir. O aplicativo continua sendo a TUI. Windows/macOS podem exigir autorização por serem aplicativos sem assinatura comercial. O arquivo SHA256SUMS.txt permite conferir a integridade dos quatro ZIPs.
+Os três pacotes nativos já incluem o Java: não é preciso instalar Java, Maven ou MySQL. Extraia a pasta inteira antes de abrir. O aplicativo para Mac abre o sistema no Terminal.
 
+Os aplicativos não têm assinatura comercial nem notarização, então o Windows ou o macOS podem pedir autorização para abri-los. O arquivo `SHA256SUMS.txt` permite conferir a integridade dos quatro ZIPs.
 
-No projeto compilado ou ZIP completo: Windows — duplo clique em iniciar.bat; macOS/Linux — sh iniciar.sh. É necessário Java 17+ instalado. O banco é dados/moradia.mv.db, relativo à pasta do iniciador.
+## Onde ficam os dados
 
-Para gerar um pacote com Java incluído, compile com o Maven e execute python scripts/empacotar_nativo.py no sistema de destino. Windows gera GoldenJava-2.0.0-windows-x64.zip; Mac gera o pacote correspondente ao processador. Extraia a pasta inteira. Windows: GoldenJava.exe. Mac: GoldenJava.app, que abre a TUI no Terminal.
+| Forma de execução | Arquivo do banco |
+| --- | --- |
+| Windows (pacote nativo) | `dados/moradia.mv.db`, dentro da pasta do pacote |
+| Mac (pacote nativo) | `~/Library/Application Support/GoldenJavaMoradia/dados/moradia.mv.db` |
+| Código-fonte ou ZIP completo | `dados/moradia.mv.db`, na pasta do iniciador |
 
-No pacote Mac, o banco de uso fica em ~/Library/Application Support/GoldenJavaMoradia/dados/moradia.mv.db. No Windows fica na pasta dados do pacote. O Java incluído é específico de cada plataforma. Os pacotes não possuem assinatura comercial ou notarização.
+## Executar pelo ZIP completo ou pelo código
 
-Os downloads da release v1 são históricos e não contêm os novos cadastros. Não confunda arquivos antigos de entrega com o pacote gerado nesta versão.
+No Windows, dê duplo clique em `iniciar.bat`. No macOS ou Linux, execute `sh iniciar.sh`. É necessário Java 17 ou superior instalado.
 
-O workflow condominio-publicar.yml é o publicador histórico da v1; não deve ser usado com os pacotes 2.0.0. O workflow de testes gera os pacotes atuais como artefatos do run.
+## Gerar os pacotes
+
+1. Compile com `./mvnw package` (Windows: `mvnw.cmd package`).
+2. Execute `python3 scripts/empacotar_nativo.py` no sistema de destino. O Windows gera o pacote Windows; o Mac gera o pacote do seu processador.
+3. Para conferir um pacote extraído, use `python3 scripts/verificar_nativo.py <pasta-extraída>`.
+
+O workflow `.github/workflows/condominio-release.yml` faz esses passos automaticamente no GitHub Actions para Windows, Mac Intel e Mac Apple Silicon, e guarda os ZIPs como artefatos da execução.
+
+A release 2.0.0 e a release v1 continuam publicadas como histórico. Use sempre a release mais recente.

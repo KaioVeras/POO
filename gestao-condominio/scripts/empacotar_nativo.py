@@ -35,7 +35,7 @@ def main():
     plataforma = 'windows' if sistema == 'Windows' else 'macos'
     entrega = raiz / 'entrega'
     entrega.mkdir(exist_ok=True)
-    destino = entrega / ('GoldenJava-2.0.0-' + plataforma + '-' + arquitetura + '.zip')
+    destino = entrega / ('GoldenJava-2.1.0-' + plataforma + '-' + arquitetura + '.zip')
     with tempfile.TemporaryDirectory(prefix='golden-java-native-') as temporario:
         area = Path(temporario)
         runtime = area / 'runtime'
@@ -46,7 +46,7 @@ def main():
             entrada.mkdir()
             shutil.copy2(jar, entrada / jar.name)
             subprocess.run([ferramenta('jpackage'), '--type', 'app-image', '--name', 'GoldenJava',
-                            '--app-version', '2.0.0', '--input', str(entrada), '--main-jar', jar.name,
+                            '--app-version', '2.1.0', '--input', str(entrada), '--main-jar', jar.name,
                             '--runtime-image', str(runtime), '--dest', str(area / 'saida'), '--win-console',
                             '--java-options', '-Dfile.encoding=UTF-8',
                             '--java-options', '-Duser.dir=$APPDIR/..'], check=True)
@@ -80,7 +80,7 @@ exec /usr/bin/open -a Terminal "$EXECUTAVEIS/../Resources/iniciar.command"
                 plistlib.dump({'CFBundleName': 'GoldenJava', 'CFBundleDisplayName': 'Residencial Golden Java',
                                'CFBundleIdentifier': 'br.edu.catolica.ucb.poo.goldenjava',
                                'CFBundleExecutable': 'GoldenJava', 'CFBundlePackageType': 'APPL',
-                               'CFBundleShortVersionString': '2.0.0', 'CFBundleVersion': '1',
+                               'CFBundleShortVersionString': '2.1.0', 'CFBundleVersion': '1',
                                'LSMinimumSystemVersion': '11.0'}, arquivo)
 
         for nome in ('docs', 'sql'):

@@ -2,85 +2,41 @@
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white)
 ![Uso educacional](https://img.shields.io/badge/Uso-Educacional-success)
-![Última atualização](https://img.shields.io/badge/%C3%9Altima%20atualiza%C3%A7%C3%A3o-02%2F11%2F2026-blue)
+![Última atualização](https://img.shields.io/badge/%C3%9Altima%20atualiza%C3%A7%C3%A3o-03%2F11%2F2026-blue)
 
-Conteúdo em Java organizado por aulas, com foco em programação orientada a objetos, interfaces gráficas com Swing e separação de responsabilidades entre controle e visão.
+Repositório da disciplina de Programação Orientada a Objetos, com exemplos das aulas e o trabalho prático do Grupo 02.
 
-Repositório público da disciplina de Programação Orientada a Objetos, com exemplos práticos, exercícios e implementações pensados para consulta rápida, revisão antes das aulas e evolução contínua ao longo do semestre.
+## Conteúdo
 
-O que você encontra aqui: exemplos incrementais em Java, organizados do básico ao mais estruturado, com cada aula servindo como ponto de entrada para os projetos relacionados.
+| Pasta | O que contém |
+| --- | --- |
+| [gestao-condominio](gestao-condominio/README.md) | Trabalho prático: **Residencial Golden Java**, sistema de condomínio em Java com JPA e banco de dados. |
+| [Aulas/helloWorld](Aulas/helloWorld) | Primeiro programa em Java. |
+| [Aulas/heranca](Aulas/heranca) | Exemplo de herança: `CarroEletrico` estende `Carro`. |
 
-## Acesso Rápido
+## Trabalho prático: Residencial Golden Java
 
-- [Visão geral](#poo)
-- [Aulas](#aulas)
-- [Trabalhos práticos](#trabalhos-práticos)
-- [Como executar](#como-executar)
-- [Atualização](#atualização)
-- [Autor](#autor)
+Sistema de terminal centrado no morador, organizado em três setores: Administração, Moradia e Portaria.
 
-## Aulas
+- [Visão geral e como executar](gestao-condominio/README.md)
+- [Guia de estudo do código](gestao-condominio/docs/guia-de-estudo.md)
+- [Baixar a versão 2.1.0 para Windows e macOS](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.1.0)
 
-| Aula | Tema | Data |
-| --- | --- | --- |
-| Aula 01 | Revisão em C e introdução à POO: classe, objeto, atributos, métodos e encapsulamento (get/set). | 2026-08-07 |
-| Aula 02 | Interfaces gráficas com Swing, tratamento de eventos e separação entre os pacotes `br.com.controle` e `br.com.visao`. | 2026-08-14 |
-| Aula 03 | Sistema de vendas (em andamento). | 2026-08-21 |
+**Para consulta do professor (Grupo 02):** [documentação entregue, orientações e diagramas](gestao-condominio/docs/entregas/2026-11-02/README.md) · [programa de Collections (item 05)](gestao-condominio/atividades/collections/App.java) · [como executar Collections](gestao-condominio/atividades/collections/README.md).
 
-## Trabalhos práticos
+## Executar os exemplos das aulas
 
-[Baixar o Residencial Golden Java 2.0.0 — Windows e Mac](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.0.0).
+Com Java 17 ou superior instalado, entre na pasta de código do exemplo, compile e execute:
 
-**Para consulta do professor — Grupo 02:** [documentação, orientações e diagramas](gestao-condominio/docs/entregas/2026-11-02/README.md) · [programa de Collections (item 05)](gestao-condominio/atividades/collections/App.java) · [como executar Collections](gestao-condominio/atividades/collections/README.md).
-
-| Trabalho | Descrição | Conceitos Utilizados |
-| --- | --- | --- |
-| [Residencial Golden Java](gestao-condominio/README.md) | Versão 2: moradores, apartamentos, garagem, funcionários e encomendas, com banco relacional. | Encapsulamento, herança, polimorfismo, JPA e transações. |
-
-## Organização dos Projetos
-
-Cada aula pode conter mais de um projeto do Apache NetBeans. Dentro de cada projeto, o código segue a divisão:
-
-```
-src/
-└── br/com/
-    ├── controle/   Classes com atributos e regras da aplicação
-    └── visao/      Telas em Swing e interação com o usuário
+```sh
+cd Aulas/heranca/src/main/java
+javac br/edu/catolica/ucb/poo/*.java
+java br.edu.catolica.ucb.poo.App
 ```
 
-Os arquivos `.form` são do editor visual do NetBeans e não são necessários para compilar.
+Para o primeiro exemplo, use a pasta `Aulas/helloWorld/src/main/java` e a classe `br.edu.catolica.ucb.poo.helloWorld`. Os projetos também podem ser abertos diretamente no IntelliJ IDEA pelo `pom.xml`.
 
-## Como Executar
-
-### Opção 1 - Apache NetBeans (recomendado)
-
-Cada pasta dentro de `Aulas/` é um projeto do NetBeans. Basta abrir o projeto desejado (`File > Open Project`) e executar com `F6`.
-
-### Opção 2 - Terminal
-
-Compile os pacotes e execute a tela principal do projeto:
-
-```
-cd Aulas/aula002/AulaPoo002/src
-javac br/com/controle/*.java br/com/visao/*.java
-java br.com.visao.TelaDobro
-```
-
-Se o exercício tiver mais de uma tela, execute a classe principal correspondente em `br/com/visao`.
-
-Alguns exemplos iniciais usam C para revisão. Nesses casos, basta compilar o `main.c`:
-
-```
-cd Aulas/aula001
-gcc main.c -o main
-./main
-```
-
-Observação: as telas Swing precisam de ambiente gráfico para serem exibidas.
-
-## Atualização
-
-Última atualização: 02/11/2026 — organização da documentação e da atividade complementar de Collections do Grupo 02.
+Os arquivos `.class` gerados pela compilação são ignorados pelo Git.
 
 ## Autor
 

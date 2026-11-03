@@ -23,7 +23,9 @@ public class App {
                 return;
             }
             GestaoService service = new GestaoService(banco);
-            Console console = new Console(new Scanner(System.in, java.nio.charset.StandardCharsets.UTF_8), System.out);
+            // Só limpa a tela quando há um terminal de verdade (não em testes ou redirecionamentos).
+            boolean terminal = System.console() != null;
+            Console console = new Console(new Scanner(System.in, java.nio.charset.StandardCharsets.UTF_8), System.out, terminal);
             new MenuPrincipal(service, console).exibir();
         } catch (RuntimeException e) {
             System.err.println("Não foi possível iniciar ou continuar o sistema. Confira a configuração e se o banco está disponível.");

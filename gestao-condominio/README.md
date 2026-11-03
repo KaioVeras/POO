@@ -1,73 +1,111 @@
-# Residencial Golden Java — versão 2
+# Residencial Golden Java (versão 2)
 
-Projeto de POO do Grupo 02: Kaio Veras e Emanuel Veloso. Versão enxuta, centrada no morador, para apresentar em 03/11/2026.
+Projeto de POO do Grupo 02: Kaio Veras e Emanuel Veloso.
 
-## Baixar os aplicativos atualizados
+Sistema de terminal para a gestão de um condomínio, centrado no **morador**. Cadastra e consulta apartamentos, moradores, funcionários e encomendas, guardando tudo em um banco de dados relacional.
 
-A [release 2.0.0](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.0.0) reúne o projeto completo e os aplicativos Windows x64, Mac Apple Silicon e Mac Intel, com Java incluído nos pacotes nativos. Veja [qual arquivo baixar](docs/EXECUTAVEIS.md). Extraia a pasta inteira antes de abrir o aplicativo.
+## O que o sistema faz
 
-## O que funciona
+| Setor | Funções |
+| --- | --- |
+| **Administração** | Consultar o condomínio; cadastrar e listar apartamentos (bloco, número e vaga de garagem opcional); cadastrar e listar funcionários (nome e cargo). |
+| **Moradia** | Cadastrar e listar moradores; consultar a ficha do morador com nome, CPF, telefone, bloco, apartamento, garagem e encomendas. |
+| **Portaria** | Receber encomenda para um morador; listar encomendas pendentes; registrar a retirada. |
 
-- **Administração:** consultar condomínio; cadastrar/listar apartamentos e funcionários.
-- **Moradia:** cadastrar/listar moradores e consultar a ficha com CPF, telefone, bloco, apartamento, garagem e encomendas.
-- **Portaria:** receber encomenda para um morador, listar pendências e confirmar retirada.
+Os dados continuam salvos depois de fechar e abrir o programa. O sistema recusa apartamento repetido no mesmo bloco, vaga de garagem repetida, CPF repetido e vínculos com registros que não existem.
 
-Taxas, multas, caixa, salários especiais e classes Cobertura/Zelador foram retirados do sistema. Zelador é um cargo de Funcionario. Manutenção é um setor futuro; não há menu vazio simulando funcionalidade.
+Zelador é um **cargo** de funcionário, não uma classe separada. Taxas, multas e gestão financeira foram retiradas por orientação do professor, para manter o foco no domínio principal do condomínio.
 
 ## Executar
 
-Com Java 17+ instalado, na pasta que contém este README:
+### Aplicativo pronto (sem instalar nada)
+
+Baixe na [release 2.1.0](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.1.0) o arquivo do seu sistema. O Java já vem incluído. Veja [qual arquivo baixar](docs/EXECUTAVEIS.md).
+
+### Pelo código-fonte
+
+É necessário ter o Java 17 ou superior. Na pasta deste README:
 
 ```sh
 ./mvnw package
 sh iniciar.sh
 ```
 
-Windows: `mvnw.cmd package`, depois duplo clique em `iniciar.bat`. No ZIP completo já compilado, use diretamente o iniciador. O programa continua sendo uma TUI.
+No Windows: `mvnw.cmd package` e depois duplo clique em `iniciar.bat`.
 
-Banco padrão: H2 em `dados/moradia.mv.db`. O arquivo antigo `dados/condominio.mv.db` não é usado nem apagado. A primeira abertura cria condomínio, apartamento A/101, vaga G01, Carlos (ID 1) e funcionário Marcos, cargo Zelador. Os cadastros seguintes permanecem após fechar e reabrir.
+O `./mvnw` baixa o Maven e as bibliotecas automaticamente na primeira vez. O comando `package` também executa os testes automatizados.
 
-## Roteiro de apresentação — cinco minutos
+### Navegação
 
-1. Administração → listar apartamentos. Mostre A/101 e a vaga G01.
-2. Administração → cadastrar apartamento: bloco B, número 102, vaga G02. Anote o ID exibido.
-3. Moradia → cadastrar morador: Ana, CPF fictício `22222222222`, telefone e ID do apartamento cadastrado.
-4. Moradia → consultar ficha, usando o ID da Ana.
-5. Portaria → receber encomenda: ID da Ana e descrição “Caixa de livros”.
-6. Consulte novamente a ficha: agora há uma encomenda pendente.
-7. Portaria → registrar retirada pelo ID da encomenda e confirmar com `s`.
-8. Feche com `0` e reabra. A moradora e o histórico permanecem, e a pendência desaparece.
+O menu principal tem `1` Administração, `2` Moradia, `3` Portaria e `0` Sair. A cada escolha a tela é limpa, mostrando apenas o resultado da operação e o menu seguinte.
 
-Ao repetir o roteiro, consulte os registros existentes ou use outro CPF/apartamento: duplicidades são recusadas.
+Na primeira abertura, o sistema cria dados de demonstração: o condomínio, o apartamento A/101 com vaga G01, o morador Carlos (ID 1) e o funcionário Marcos, com cargo Zelador.
 
-## Entender o código
+## Roteiro de apresentação (cinco minutos)
 
-Leia [o guia de estudo](docs/guia-de-estudo.md), [o modelo e o banco](docs/banco-de-dados.md) e [o estado da versão](docs/estado-do-projeto.md).
+1. Administração > Listar apartamentos. Mostre o A/101 com a vaga G01.
+2. Administração > Cadastrar apartamento: bloco B, número 102, vaga G02. Anote o ID exibido.
+3. Moradia > Cadastrar morador: Ana, CPF fictício `22222222222`, um telefone e o ID do apartamento cadastrado.
+4. Moradia > Consultar ficha, usando o ID da Ana.
+5. Portaria > Receber encomenda: ID da Ana e a descrição "Caixa de livros".
+6. Moradia > Consultar ficha novamente: agora há uma encomenda pendente.
+7. Portaria > Registrar retirada pelo ID da encomenda e confirmar com `s`.
+8. Saia com `0` e abra novamente. A moradora e o histórico continuam lá, e a pendência desapareceu.
+
+Ao repetir o roteiro, use outro CPF e outro apartamento: duplicidades são recusadas.
+
+## Organização do código
 
 ```text
-App → MenuPrincipal → GestaoService → CondominioRepository → Banco/JPA
-                          ↓
-                       model/
+src/main/java/br/edu/catolica/ucb/poo/
+├── App.java                     Inicia o banco, os dados iniciais e o menu
+├── view/
+│   ├── MenuPrincipal.java       Menus dos três setores
+│   └── Console.java             Leitura do teclado, escrita e limpeza da tela
+├── service/
+│   └── GestaoService.java       Operações do sistema e regras entre registros
+├── repository/
+│   └── CondominioRepository.java  Consultas e gravações com JPA
+├── model/                       Entidades: Condominio, Apartamento, Morador,
+│                                Funcionario, Encomenda e a classe Validacao
+└── infra/
+    ├── Banco.java               Conexão, consultas e transações
+    └── DadosIniciais.java       Dados de demonstração
 ```
 
-`model` representa o condomínio; `view` lê e apresenta; o serviço coordena cadastro e vínculos; o repositório consulta/grava; Banco abre/fecha conexões e controla transações. Todos os registros têm ID; CPF é uma informação única do morador. Apartamento é identificado pelo par bloco/número.
+Caminho de uma operação: **Menu > Serviço > Repositório > Banco (JPA/Hibernate)**. As entidades validam seus próprios dados no construtor.
+
+## Documentação
+
+| Documento | Conteúdo |
+| --- | --- |
+| [Guia de estudo](docs/guia-de-estudo.md) | Como o código funciona, conceitos de POO e perguntas para a apresentação. |
+| [Banco de dados](docs/banco-de-dados.md) | H2, JPA, tabelas e uso opcional do MySQL. |
+| [Estado do projeto](docs/estado-do-projeto.md) | O que está pronto, decisões, limites e verificações. |
+| [Executáveis](docs/EXECUTAVEIS.md) | Pacotes para Windows e macOS. |
+| [Entrega de 02/11/2026](docs/entregas/2026-11-02/README.md) | Documento entregue, orientações do professor e diagramas. |
+| [Atividade de Collections](atividades/collections/README.md) | Programa separado com ArrayList, HashSet e HashMap (item 05). |
+
+A pasta `docs/referencias` guarda a lista de exercícios, a proposta inicial do grupo e o exemplo Java/JPA do professor.
 
 ## Banco e testes
 
-H2 é um banco relacional embutido, em arquivo; dispensa servidor para a apresentação. MySQL permanece opcional: crie uma **base nova** usando `sql/mysql.sql`, configure `BANCO=mysql`, `DB_USER`, `DB_PASSWORD` e, se necessário, `DB_URL`. A URL padrão aponta para `gestao_moradia`. Os dados financeiros antigos não são migrados.
+O banco padrão é o **H2**, um banco relacional embutido no programa, gravado em `dados/moradia.mv.db`. Não é preciso instalar servidor. O MySQL é opcional: veja [banco-de-dados.md](docs/banco-de-dados.md).
 
-`./mvnw test` verifica cadastro, duplicidade, vínculos, ficha no terminal, retirada e recuperação após reabrir. Os testes usam bancos descartáveis, sem alterar seus dados.
+Para rodar somente os testes:
 
-## Entrega
+```sh
+./mvnw test
+```
+
+Os testes conferem cadastro, duplicidades, vínculos, ficha pelo menu, retirada de encomenda, cancelamento de cadastro incompleto e a permanência dos dados após reabrir o banco. Eles usam bancos descartáveis e não alteram os seus dados.
+
+## Gerar a entrega
 
 ```sh
 python3 scripts/empacotar.py
 ```
 
-Gera `entrega/grupo_2_projeto.zip` com JAR, fontes, documentação, banco demonstrativo e SQL. Para incluir seu H2 atual, feche a aplicação e use `--incluir-banco`. Os pacotes Windows/Mac com Java incluído podem ser gerados no sistema correspondente por `scripts/empacotar_nativo.py`; consulte [EXECUTAVEIS.md](docs/EXECUTAVEIS.md).
+Gera `entrega/grupo_2_projeto.zip` com JAR, código, documentação, banco de demonstração e SQL. Para incluir o seu banco H2 atual, feche o programa e use `--incluir-banco`. Os aplicativos para Windows e macOS são gerados por `scripts/empacotar_nativo.py`, conforme [EXECUTAVEIS.md](docs/EXECUTAVEIS.md).
 
-A [release v1](https://github.com/KaioVeras/POO/releases/tag/condominio-v1.0.0) é histórica e contém o sistema financeiro anterior, não esta versão. Não a use para demonstrar o novo cadastro.
-
-## Materiais entregues anteriormente
-
-[PDF, orientações e diagramas](docs/entregas/2026-11-02/README.md) e [atividade isolada de Collections](atividades/collections/README.md) ficam preservados como evidência. As propostas antigas não representam as funcionalidades atuais. Os guias antigos estão em `docs/historico-v1/`.
+A [release v1](https://github.com/KaioVeras/POO/releases/tag/condominio-v1.0.0) é histórica: contém o sistema financeiro anterior, não esta versão.

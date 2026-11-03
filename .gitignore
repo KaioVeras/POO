@@ -1,21 +1,15 @@
-# macOS
+# Sistema operacional
 .DS_Store
+Thumbs.db
 
-# NetBeans
-/Aulas/aula001/AulaPoo001/nbproject/private/
-/Aulas/aula002/AtvAulaPoo002/nbproject/private/
-/Aulas/aula002/AulaPoo002/nbproject/private/
-/Aulas/aula003/AulaPoo003/nbproject/private/
-/Aulas/aula002/AulaPoo002/build/
-/Aulas/aula002/AtvAulaPoo002/build/
-/Aulas/aula003/AulaPoo003/build/
+# IDEs (arquivos locais)
+.idea/
+*.iml
+.vscode/
 nbproject/private/
+
+# Compilação
+target/
 build/
 dist/
 *.class
-/Atividades/AtvAula003/nbproject/private/
-/Aulas/aula004/AulaPoo004/nbproject/private/
-
-# IntelliJ IDEA — arquivos locais da IDE
-.idea/
-*.iml

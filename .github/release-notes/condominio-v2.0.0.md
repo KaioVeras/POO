@@ -1,4 +1,4 @@
-# Residencial Golden Java 2.0.0 — moradia e portaria
+# Residencial Golden Java 2.0.0: moradia e portaria
 
 Versão simplificada para a apresentação do Grupo 02, centrada no morador e nos setores primários do condomínio.
 

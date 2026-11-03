@@ -1,15 +1,53 @@
-# Estado da versão 2 — 02/11/2026
+# Estado do projeto (versão 2)
 
-## Pronto
+## Decisões aprovadas com o professor
 
-Cadastro/listagem de apartamentos com vaga opcional, moradores e funcionários com cargo. Ficha do morador com dados pessoais, apartamento, garagem e histórico de encomendas. Recebimento, consulta de pendências e retirada. Persistência H2; configuração e script MySQL do novo modelo.
+A primeira versão abrangia taxas, multas, finanças, salários e tipos especiais de funcionários. O professor considerou o escopo aprofundado demais e orientou começar pelo domínio principal do condomínio, detalhando apenas o necessário. Por isso:
 
-## Regras simples
+- O sistema foi organizado em Administração, Moradia e Portaria, com o morador como elemento central.
+- Taxas, multas e gestão financeira foram retiradas.
+- Zelador passou a ser um cargo de funcionário, não uma classe própria.
+- Herança e padrões de projeto só são usados quando há motivo concreto.
 
-CPF com 11 dígitos e único (sem validação de dígitos verificadores, pois a apresentação usa dados fictícios). Apartamento único por bloco/número; vaga não compartilhada entre apartamentos. Telefone obrigatório como texto, permitindo DDD e pontuação. Morador precisa de apartamento existente; encomenda precisa de morador existente. Retirada não pode ser repetida.
+## O que está pronto
 
-## Limites e próximos passos
+- Consulta do condomínio.
+- Cadastro e listagem de apartamentos, com vaga de garagem opcional.
+- Cadastro e listagem de funcionários com cargo.
+- Cadastro e listagem de moradores.
+- Ficha do morador com dados pessoais, apartamento, bloco, garagem e encomendas.
+- Recebimento de encomendas, lista de pendentes e registro de retirada.
+- Persistência em banco H2; configuração e script SQL para MySQL.
+- Limpeza da tela do terminal a cada escolha no menu.
 
-Sem edição/exclusão nesta entrega; sem login, visitantes, veículos, múltiplas vagas ou manutenção. Sem financeiro. Encomendas são vinculadas a um morador; não há comprovação documental de quem retirou. Um condomínio por banco. Sem migração automática dos registros da v1. A apresentação deve se concentrar no cadastro e na ficha do morador.
+## Regras de validação
 
-A alteração anterior de IDs no SQL foi substituída pelo modelo coerente desta versão: todos os registros têm ID, e os vínculos utilizam IDs. Os materiais enviados anteriormente permanecem como histórico.
+- CPF com 11 dígitos e sem repetição. Os dígitos verificadores não são calculados, pois a apresentação usa dados fictícios.
+- Apartamento único por bloco e número; o mesmo número pode existir em blocos diferentes.
+- Uma vaga de garagem não pode pertencer a dois apartamentos.
+- Campos obrigatórios não podem ficar vazios.
+- Morador precisa de um apartamento existente; encomenda precisa de um morador existente.
+- Uma encomenda não pode ser retirada duas vezes.
+- Se a entrada terminar no meio de um cadastro, nada é gravado.
+
+## Limites intencionais
+
+Estes itens ficaram fora da versão 2 de propósito:
+
+- Edição e exclusão de cadastros.
+- Login e permissões.
+- Gestão financeira.
+- Cadastro de veículos e várias vagas por apartamento.
+- Módulo de manutenção.
+- Mais de um condomínio por banco.
+- Migração automática dos dados da versão 1.
+
+## Verificações realizadas
+
+- Cinco testes automatizados com JUnit passam (`./mvnw test`). O conteúdo de cada um está no [guia de estudo](guia-de-estudo.md#8-testes).
+- O ZIP completo e os pacotes nativos de Windows, Mac Intel e Mac Apple Silicon foram verificados no GitHub Actions por `scripts/verificar_nativo.py`: cadastro de morador, recebimento e retirada de encomenda, com reabertura do banco entre as etapas.
+- O script `sql/mysql.sql` foi alinhado ao modelo atual, mas **não foi testado em um servidor MySQL real**. A apresentação usa o H2.
+
+## Bancos da versão anterior
+
+A versão 2 usa o arquivo `dados/moradia.mv.db` e a base MySQL `gestao_moradia`. O banco da versão 1 (`dados/condominio.mv.db`) não é usado nem apagado. Os documentos e o código da versão 1 continuam disponíveis na [release v1](https://github.com/KaioVeras/POO/releases/tag/condominio-v1.0.0) e no histórico do Git.

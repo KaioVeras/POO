@@ -39,6 +39,6 @@ A ordem de exibição de `HashSet` e `HashMap` não é garantida. Isso é difere
 
 A aplicação principal está em [`src/main/java/br/edu/catolica/ucb/poo/App.java`](../../src/main/java/br/edu/catolica/ucb/poo/App.java), com entidades, menu, serviços e banco relacional. Aqui, os valores ficam nas coleções apenas para demonstrar seus comportamentos.
 
-O uso de `Double` nas taxas foi mantido como no arquivo fornecido para a atividade. No sistema principal, os cálculos monetários usam conversão decimal e regras próprias. O exemplo de visitantes também não significa que o módulo de portaria esteja implementado.
+O uso de `Double` nas taxas foi mantido como no arquivo fornecido para a atividade. As taxas aparecem só neste exercício: o sistema principal não tem gestão financeira. Da mesma forma, o exemplo de visitantes não significa que o sistema principal controle visitantes; a portaria dele trata apenas de encomendas.
 
 Consulte o [índice da entrega](../../docs/entregas/2026-11-02/README.md) para localizar o PDF, as orientações e os diagramas.

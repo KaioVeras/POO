@@ -20,13 +20,13 @@ O SQL MySQL está em sql/mysql.sql e usa a base nova gestao_moradia. O Hibernate
 
 ## Consultar H2 no navegador
 
-Feche a TUI, execute na pasta do projeto:
+Feche o programa e execute na pasta do projeto:
 
 ```sh
 java -cp target/gestao-condominio.jar org.h2.tools.Server -web -webPort 8082 -properties null -ifExists
 ```
 
-Abra http://localhost:8082. Driver org.h2.Driver; URL `jdbc:h2:./dados/moradia;IFEXISTS=TRUE`; usuário sa; senha vazia. No ZIP completo, remova target/ do caminho do JAR. Desconecte o console antes de abrir a TUI.
+Abra http://localhost:8082. Driver org.h2.Driver; URL `jdbc:h2:./dados/moradia;IFEXISTS=TRUE`; usuário sa; senha vazia. No ZIP completo, remova target/ do caminho do JAR. Desconecte o console antes de abrir o programa novamente.
 
 ```sql
 SELECT * FROM APARTAMENTOS;
