@@ -24,9 +24,9 @@ public final class Banco implements AutoCloseable {
 
     public static Banco abrirPadrao() {
         return switch (nomeSelecionado()) {
-            case "h2" -> abrirH2(configuracao("db.url", "DB_URL", "jdbc:h2:./dados/condominio"));
+            case "h2" -> abrirH2(configuracao("db.url", "DB_URL", "jdbc:h2:./dados/moradia"));
             case "mysql" -> new Banco("com.mysql.cj.jdbc.Driver",
-                    configuracao("db.url", "DB_URL", "jdbc:mysql://localhost:3306/gestao_condominio?serverTimezone=America/Sao_Paulo"),
+                    configuracao("db.url", "DB_URL", "jdbc:mysql://localhost:3306/gestao_moradia?serverTimezone=America/Sao_Paulo"),
                     configuracao("db.user", "DB_USER", "condominio"),
                     configuracao("db.password", "DB_PASSWORD", ""));
             default -> throw new IllegalArgumentException("Banco inválido. Use h2 ou mysql.");

@@ -1,0 +1,4 @@
+# Simplificação aprovada — 02/11/2026
+Objetivo: Administração (apartamentos e funcionários), Moradia (cadastro e ficha do morador), Portaria (receber/retirar encomenda). Sem financeiro, heranças de cobertura/zelador, login ou manutenção nesta entrega.
+Apartamento guarda bloco, número e vaga opcional; Morador guarda CPF, nome, telefone e referência ao apartamento. Encomenda pertence a um morador, com recebimento e retirada. Todos possuem ID gerado; condomínio único.
+Preservar materiais entregues e Collections como evidências históricas. Usar banco moradia separado do banco financeiro antigo; não apagar registros existentes. Implementar testes de cadastro, duplicidade, ficha, retirada e reabertura antes das classes. Atualizar SQL, instruções e verificadores dos pacotes. Entregar JAR/ZIP atual, sem substituir a release v1 histórica.

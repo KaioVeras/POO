@@ -1,47 +1,22 @@
 package br.edu.catolica.ucb.poo.repository;
-
-import br.edu.catolica.ucb.poo.model.*;
 import jakarta.persistence.*;
 import java.util.List;
-
-/** Consultas do projeto; a transação pertence ao serviço que coordena a operação. */
+import br.edu.catolica.ucb.poo.model.*;
 public class CondominioRepository {
-    private final EntityManager em;
-
-    public CondominioRepository(EntityManager em) { this.em = em; }
-
-    public Condominio consultarCondominio() {
-        return em.find(Condominio.class, 1L);
-    }
-
-    public Condominio bloquearCaixa() {
-        // Dois recebimentos simultâneos não podem sobrescrever o saldo um do outro.
-        return em.find(Condominio.class, 1L, LockModeType.PESSIMISTIC_WRITE);
-    }
-
-    public Unidade buscarUnidade(int numero) {
-        Unidade unidade = em.find(Unidade.class, numero);
-        if (unidade == null) throw new IllegalArgumentException("Unidade " + numero + " não encontrada.");
-        return unidade;
-    }
-
-    public List<Unidade> listarUnidades() {
-        return em.createQuery("select u from Unidade u order by u.numero", Unidade.class).getResultList();
-    }
-
-    public Morador buscarMorador(int numeroUnidade) {
-        return em.createQuery("select m from Morador m join fetch m.unidade where m.unidade.numero = :numero", Morador.class)
-                .setParameter("numero", numeroUnidade).getResultStream().findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Não há morador cadastrado nessa unidade."));
-    }
-
-    public List<Funcionario> listarFuncionarios() {
-        return em.createQuery("select f from Funcionario f order by f.id", Funcionario.class).getResultList();
-    }
-
-    public List<MovimentacaoFinanceira> listarMovimentacoes() {
-        return em.createQuery("select m from MovimentacaoFinanceira m order by m.id", MovimentacaoFinanceira.class).getResultList();
-    }
-
-    public void salvar(Object entidade) { em.persist(entidade); }
+ private final EntityManager em;
+ public CondominioRepository(EntityManager em){this.em=em;}
+ public <T> T buscar(Class<T> tipo,long id){T objeto=em.find(tipo,id);if(objeto==null)throw new IllegalArgumentException(tipo.getSimpleName()+" não encontrado: "+id);return objeto;}
+ public <T> List<T> listar(Class<T> tipo){return em.createQuery("select e from "+tipo.getSimpleName()+" e order by e.id",tipo).getResultList();}
+ public void salvar(Object objeto){em.persist(objeto);}
+ public boolean existeApartamento(String bloco,String numero){return em.createQuery("select count(a) from Apartamento a where a.bloco=:b and a.numero=:n",Long.class).setParameter("b",bloco).setParameter("n",numero).getSingleResult()>0;}
+ public boolean existeVaga(String vaga){return em.createQuery("select count(a) from Apartamento a where a.vaga=:v",Long.class).setParameter("v",vaga).getSingleResult()>0;}
+ public boolean existeCpf(String cpf){return em.createQuery("select count(m) from Morador m where m.cpf=:c",Long.class).setParameter("c",cpf).getSingleResult()>0;}
+ public List<Encomenda> encomendas(Long moradorId,boolean apenasPendentes){
+  String jpql="select e from Encomenda e where 1=1";
+  if(moradorId!=null)jpql+=" and e.morador.id=:m";
+  if(apenasPendentes)jpql+=" and e.retiradaEm is null";
+  var query=em.createQuery(jpql+" order by e.id",Encomenda.class);
+  if(moradorId!=null)query.setParameter("m",moradorId);
+  return query.getResultList();
+ }
 }

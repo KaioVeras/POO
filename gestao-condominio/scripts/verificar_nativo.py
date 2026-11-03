@@ -30,22 +30,26 @@ def verificar(pacote):
         # Executar de outra pasta SEM DB_URL testa a localização padrão do banco.
         executar('1\n0\n')
         if platform.system() == 'Windows':
-            banco_padrao = pacote / 'dados/condominio.mv.db'
+            banco_padrao = pacote / 'dados/moradia.mv.db'
             if (Path(temporario) / 'dados').exists():
                 raise AssertionError('O launcher criou banco relativo à pasta de quem o chamou.')
         else:
-            banco_padrao = Path(ambiente['GOLDENJAVA_DATA_DIR']) / 'dados/condominio.mv.db'
+            banco_padrao = Path(ambiente['GOLDENJAVA_DATA_DIR']) / 'dados/moradia.mv.db'
         if not banco_padrao.is_file():
             raise AssertionError('Banco padrão não encontrado em ' + str(banco_padrao))
 
-        ambiente['DB_URL'] = 'jdbc:h2:' + str(Path(temporario) / 'banco-financeiro')
-        primeiro = executar('1\n6\n201\n10\ns\n7\nLimpeza\n87,50\ns\n0\n')
-        if 'Pagamento registrado: R$ 687,50' not in primeiro:
-            raise AssertionError('O executável não registrou o pagamento esperado:\n' + primeiro)
-        segundo = executar('1\n10\n0\n')
-        if 'Saldo do condomínio: R$ 600,00' not in segundo or 'PAGAMENTO' not in segundo:
-            raise AssertionError('Saldo/histórico não foram recuperados após reabrir:\n' + segundo)
-    print('OK: executável com runtime próprio, pagamento, despesa e persistência após reinício.')
+        ambiente['DB_URL'] = 'jdbc:h2:' + str(Path(temporario) / 'teste-moradia')
+        primeiro = executar('2\n1\nAna\n22222222222\n61999998888\n1\n0\n3\n1\n2\nCaixa de livros\n0\n0\n')
+        if 'Morador cadastrado:' not in primeiro or 'Encomenda recebida:' not in primeiro:
+            raise AssertionError(primeiro)
+        segundo = executar('2\n3\n2\n0\n3\n3\n1\ns\n0\n0\n')
+        if 'Encomendas pendentes: 1' not in segundo or 'Retirada registrada.' not in segundo:
+            raise AssertionError(segundo)
+        terceiro = executar('2\n3\n2\n0\n0\n')
+        if 'Encomendas pendentes: 0' not in terceiro:
+            raise AssertionError(terceiro)
+    print('OK: cadastro, ficha, recebimento, retirada e persistência no pacote nativo.')
+
 
 
 if __name__ == '__main__':

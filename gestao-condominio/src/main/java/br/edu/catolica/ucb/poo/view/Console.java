@@ -1,8 +1,6 @@
 package br.edu.catolica.ucb.poo.view;
 
 import java.io.PrintStream;
-import java.math.BigDecimal;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Console {
@@ -32,17 +30,6 @@ public class Console {
         }
     }
 
-    public double lerDecimal(String rotulo) {
-        while (true) {
-            String texto = lerTexto(rotulo);
-            // Evita interpretar 1.000 (mil ou um?) e não aceita NaN/infinito.
-            if (texto.matches("-?[0-9]{1,10}([,.][0-9]{1,2})?")) {
-                return new BigDecimal(texto.replace(',', '.')).doubleValue();
-            }
-            mostrar("Digite um valor sem separador de milhar e com até duas casas. Exemplo: 500,00.");
-        }
-    }
-
     public boolean confirmar(String rotulo) {
         while (true) {
             String resposta = lerTexto(rotulo + " (s/n): ");
@@ -50,10 +37,6 @@ public class Console {
             if (resposta.equalsIgnoreCase("n")) return false;
             mostrar("Responda s ou n.");
         }
-    }
-
-    public String dinheiro(double valor) {
-        return String.format(Locale.forLanguageTag("pt-BR"), "R$ %.2f", valor);
     }
 
     public static class FimDaEntrada extends RuntimeException { }

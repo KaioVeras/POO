@@ -1,5 +1,7 @@
 # Entrega do Grupo 02 — documentação e Collections
 
+> Registro histórico dos materiais enviados antes da simplificação do domínio. A aplicação atual está descrita no [README do projeto](../../../README.md); os comentários abaixo sobre v1 e migração pendente retratam aquele momento, não o estado da versão 2.
+
 Materiais recebidos e organizados em **02/11/2026** para consulta do professor. Projeto: **Residencial Golden Java**, de **Kaio Veras e Emanuel Veloso**.
 
 ## Acesso direto

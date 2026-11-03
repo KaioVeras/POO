@@ -1,49 +1,25 @@
-CREATE DATABASE IF NOT EXISTS gestao_condominio CHARACTER SET utf8mb4;
-USE gestao_condominio;
-
-CREATE TABLE condominios (
-    id BIGINT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    blocos INT NOT NULL,
-    taxa_padrao DECIMAL(12,2) NOT NULL,
-    portaria_24h BOOLEAN NOT NULL,
-    saldo_caixa DECIMAL(12,2) NOT NULL
-);
-CREATE TABLE unidades (
-    id BIGINT PRIMARY KEY,
-    numero INT,
-    tipo VARCHAR(20) NOT NULL,
-    taxa_base DECIMAL(12,2) NOT NULL,
-    ocupada BOOLEAN NOT NULL
+-- Versão 2: base nova. Não executar sobre a base financeira da v1.
+CREATE DATABASE IF NOT EXISTS gestao_moradia CHARACTER SET utf8mb4;
+USE gestao_moradia;
+CREATE TABLE condominios (id BIGINT PRIMARY KEY, nome VARCHAR(100) NOT NULL);
+CREATE TABLE apartamentos (
+ id BIGINT AUTO_INCREMENT PRIMARY KEY, bloco VARCHAR(20) NOT NULL,
+ numero VARCHAR(20) NOT NULL, vaga VARCHAR(20) UNIQUE, UNIQUE(bloco, numero)
 );
 CREATE TABLE moradores (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    cpf VARCHAR(11) UNIQUE,
-    nome VARCHAR(100) NOT NULL,
-    unidade_numero INT NOT NULL,
-    FOREIGN KEY (unidade_numero) REFERENCES unidades(numero)
+ id BIGINT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(100) NOT NULL,
+ cpf VARCHAR(11) NOT NULL UNIQUE, telefone VARCHAR(30) NOT NULL,
+ apartamento_id BIGINT NOT NULL, FOREIGN KEY(apartamento_id) REFERENCES apartamentos(id)
 );
 CREATE TABLE funcionarios (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    tipo VARCHAR(20) NOT NULL,
-    nome VARCHAR(100) NOT NULL,
-    salario_base DOUBLE NOT NULL
+ id BIGINT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(100) NOT NULL, cargo VARCHAR(50) NOT NULL
 );
-CREATE TABLE movimentacoes (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    tipo VARCHAR(20) NOT NULL,
-    valor DECIMAL(12,2) NOT NULL,
-    descricao VARCHAR(200) NOT NULL,
-    registrada_em DATETIME(6) NOT NULL,
-    unidade_numero INT,
-    FOREIGN KEY (unidade_numero) REFERENCES unidades(numero)
+CREATE TABLE encomendas (
+ id BIGINT AUTO_INCREMENT PRIMARY KEY, morador_id BIGINT NOT NULL,
+ descricao VARCHAR(200) NOT NULL, recebida_em DATETIME NOT NULL, retirada_em DATETIME,
+ FOREIGN KEY(morador_id) REFERENCES moradores(id)
 );
-
-INSERT INTO condominios VALUES (1, 'Residencial Golden Java', 2, 500.00, TRUE, 0.00);
-INSERT INTO unidades (numero, tipo, taxa_base, ocupada) VALUES
-    (101, 'COMUM', 500.00, TRUE),
-    (102, 'COMUM', 500.00, FALSE),
-    (201, 'COBERTURA', 500.00, TRUE);
-INSERT INTO moradores VALUES ('11111111111', 'Carlos', 101), ('22222222222', 'Ana', 201);
-INSERT INTO funcionarios (tipo, nome, salario_base) VALUES
-    ('COMUM', 'Paulo', 2500.00), ('ZELADOR', 'Marcos', 3000.00);
+INSERT INTO condominios VALUES(1,'Residencial Golden Java');
+INSERT INTO apartamentos(bloco,numero,vaga) VALUES('A','101','G01');
+INSERT INTO moradores(nome,cpf,telefone,apartamento_id) VALUES('Carlos','11111111111','61999990000',1);
+INSERT INTO funcionarios(nome,cargo) VALUES('Marcos','Zelador');

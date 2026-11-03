@@ -1,72 +1,31 @@
 package br.edu.catolica.ucb.poo.service;
-
 import br.edu.catolica.ucb.poo.infra.Banco;
 import br.edu.catolica.ucb.poo.model.*;
 import br.edu.catolica.ucb.poo.repository.CondominioRepository;
-import java.math.BigDecimal;
 import java.util.List;
-
 public class GestaoService {
-    private final Banco banco;
-
-    public GestaoService(Banco banco) { this.banco = banco; }
-
-    public Condominio consultarCondominio() {
-        return banco.consultar(em -> new CondominioRepository(em).consultarCondominio());
-    }
-
-    public List<Unidade> listarUnidades() {
-        return banco.consultar(em -> new CondominioRepository(em).listarUnidades());
-    }
-
-    public Unidade consultarUnidade(int numero) {
-        return banco.consultar(em -> new CondominioRepository(em).buscarUnidade(numero));
-    }
-
-    public Morador consultarMorador(int numeroUnidade) {
-        return banco.consultar(em -> new CondominioRepository(em).buscarMorador(numeroUnidade));
-    }
-
-    public List<Funcionario> listarFuncionarios() {
-        return banco.consultar(em -> new CondominioRepository(em).listarFuncionarios());
-    }
-
-    public List<MovimentacaoFinanceira> listarMovimentacoes() {
-        return banco.consultar(em -> new CondominioRepository(em).listarMovimentacoes());
-    }
-
-    public double simularArrecadacao() {
-        BigDecimal total = BigDecimal.ZERO;
-        for (Unidade unidade : listarUnidades()) {
-            total = total.add(Valores.dinheiro(unidade.calcularTaxa()));
-        }
-        return total.doubleValue();
-    }
-
-    public MovimentacaoFinanceira registrarPagamento(int numeroUnidade, double percentualMulta) {
-        return banco.transacionar(em -> {
-            CondominioRepository repository = new CondominioRepository(em);
-            Condominio condominio = repository.bloquearCaixa();
-            Unidade unidade = repository.buscarUnidade(numeroUnidade);
-            double valor = unidade.calcularTaxa(percentualMulta);
-            condominio.receberPagamento(valor);
-            MovimentacaoFinanceira movimento = new MovimentacaoFinanceira(
-                    MovimentacaoFinanceira.Tipo.PAGAMENTO, valor,
-                    "Taxa da unidade " + numeroUnidade + " (multa " + percentualMulta + "%)", unidade);
-            repository.salvar(movimento);
-            return movimento;
-        });
-    }
-
-    public MovimentacaoFinanceira registrarDespesa(String descricao, double valor) {
-        return banco.transacionar(em -> {
-            CondominioRepository repository = new CondominioRepository(em);
-            Condominio condominio = repository.bloquearCaixa();
-            condominio.pagarDespesa(valor);
-            MovimentacaoFinanceira movimento = new MovimentacaoFinanceira(
-                    MovimentacaoFinanceira.Tipo.DESPESA, valor, descricao, null);
-            repository.salvar(movimento);
-            return movimento;
-        });
-    }
+ private final Banco banco;
+ public GestaoService(Banco banco){this.banco=banco;}
+ public Condominio consultarCondominio(){return banco.consultar(em->new CondominioRepository(em).buscar(Condominio.class,1));}
+ public List<Apartamento> listarApartamentos(){return banco.consultar(em->new CondominioRepository(em).listar(Apartamento.class));}
+ public List<Morador> listarMoradores(){return banco.consultar(em->new CondominioRepository(em).listar(Morador.class));}
+ public List<Funcionario> listarFuncionarios(){return banco.consultar(em->new CondominioRepository(em).listar(Funcionario.class));}
+ public Morador consultarMorador(long id){return banco.consultar(em->new CondominioRepository(em).buscar(Morador.class,id));}
+ public Apartamento cadastrarApartamento(String bloco,String numero,String vaga){
+  return banco.transacionar(em->{var r=new CondominioRepository(em);var a=new Apartamento(bloco,numero,vaga);
+   if(r.existeApartamento(a.getBloco(),a.getNumero()))throw new IllegalArgumentException("Apartamento já cadastrado nesse bloco.");
+   if(a.getVaga()!=null && r.existeVaga(a.getVaga()))throw new IllegalArgumentException("Vaga já vinculada a outro apartamento.");
+   r.salvar(a);return a;});
+ }
+ public Morador cadastrarMorador(String nome,String cpf,String telefone,long apartamentoId){
+  return banco.transacionar(em->{var r=new CondominioRepository(em);
+   var m=new Morador(nome,cpf,telefone,r.buscar(Apartamento.class,apartamentoId));
+   if(r.existeCpf(cpf))throw new IllegalArgumentException("CPF já cadastrado.");r.salvar(m);return m;});
+ }
+ public Funcionario cadastrarFuncionario(String nome,String cargo){return banco.transacionar(em->{var f=new Funcionario(nome,cargo);em.persist(f);return f;});}
+ public Encomenda receberEncomenda(long moradorId,String descricao){return banco.transacionar(em->{var r=new CondominioRepository(em);var e=new Encomenda(r.buscar(Morador.class,moradorId),descricao);r.salvar(e);return e;});}
+ public void retirarEncomenda(long id){banco.transacionar(em->{var e=em.find(Encomenda.class,id,jakarta.persistence.LockModeType.PESSIMISTIC_WRITE);if(e==null)throw new IllegalArgumentException("Encomenda não encontrada.");e.retirar();return null;});}
+ public List<Encomenda> listarPendentes(){return banco.consultar(em->new CondominioRepository(em).encomendas(null,true));}
+ public List<Encomenda> encomendasPendentes(long moradorId){return banco.consultar(em->{var r=new CondominioRepository(em);r.buscar(Morador.class,moradorId);return r.encomendas(moradorId,true);});}
+ public List<Encomenda> historicoEncomendas(long moradorId){return banco.consultar(em->{var r=new CondominioRepository(em);r.buscar(Morador.class,moradorId);return r.encomendas(moradorId,false);});}
 }

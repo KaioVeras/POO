@@ -35,7 +35,7 @@ def main():
     plataforma = 'windows' if sistema == 'Windows' else 'macos'
     entrega = raiz / 'entrega'
     entrega.mkdir(exist_ok=True)
-    destino = entrega / ('GoldenJava-1.0.0-' + plataforma + '-' + arquitetura + '.zip')
+    destino = entrega / ('GoldenJava-2.0.0-' + plataforma + '-' + arquitetura + '.zip')
     with tempfile.TemporaryDirectory(prefix='golden-java-native-') as temporario:
         area = Path(temporario)
         runtime = area / 'runtime'
@@ -46,7 +46,7 @@ def main():
             entrada.mkdir()
             shutil.copy2(jar, entrada / jar.name)
             subprocess.run([ferramenta('jpackage'), '--type', 'app-image', '--name', 'GoldenJava',
-                            '--app-version', '1.0.0', '--input', str(entrada), '--main-jar', jar.name,
+                            '--app-version', '2.0.0', '--input', str(entrada), '--main-jar', jar.name,
                             '--runtime-image', str(runtime), '--dest', str(area / 'saida'), '--win-console',
                             '--java-options', '-Dfile.encoding=UTF-8',
                             '--java-options', '-Duser.dir=$APPDIR/..'], check=True)
@@ -63,7 +63,7 @@ def main():
             iniciar.write_text('''#!/bin/sh
 set -eu
 RECURSOS="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
-DIRETORIO_DADOS="${GOLDENJAVA_DATA_DIR:-$HOME/Library/Application Support/GoldenJava}"
+DIRETORIO_DADOS="${GOLDENJAVA_DATA_DIR:-$HOME/Library/Application Support/GoldenJavaMoradia}"
 mkdir -p "$DIRETORIO_DADOS"
 cd "$DIRETORIO_DADOS"
 exec "$RECURSOS/runtime/bin/java" -Dfile.encoding=UTF-8 -jar "$RECURSOS/gestao-condominio.jar" "$@"
@@ -80,7 +80,7 @@ exec /usr/bin/open -a Terminal "$EXECUTAVEIS/../Resources/iniciar.command"
                 plistlib.dump({'CFBundleName': 'GoldenJava', 'CFBundleDisplayName': 'Residencial Golden Java',
                                'CFBundleIdentifier': 'br.edu.catolica.ucb.poo.goldenjava',
                                'CFBundleExecutable': 'GoldenJava', 'CFBundlePackageType': 'APPL',
-                               'CFBundleShortVersionString': '1.0.0', 'CFBundleVersion': '1',
+                               'CFBundleShortVersionString': '2.0.0', 'CFBundleVersion': '1',
                                'LSMinimumSystemVersion': '11.0'}, arquivo)
 
         for nome in ('docs', 'sql'):
@@ -89,7 +89,7 @@ exec /usr/bin/open -a Terminal "$EXECUTAVEIS/../Resources/iniciar.command"
         shutil.copy2(raiz / 'LICENSE', pacote / 'LICENSE')
         shutil.copy2(raiz / 'docs/EXECUTAVEIS.md', pacote / 'LEIA-ME.md')
         (pacote / 'dados').mkdir()
-        url = 'jdbc:h2:' + str(pacote / 'dados/condominio')
+        url = 'jdbc:h2:' + str(pacote / 'dados/moradia')
         subprocess.run([ferramenta('java'), '-Dbanco=h2', '-Ddb.url=' + url,
                         '-jar', str(jar), '--inicializar'], check=True)
         subprocess.run([ferramenta('java'), '-cp', str(jar), 'org.h2.tools.Script',
