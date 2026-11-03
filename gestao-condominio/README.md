@@ -2,6 +2,10 @@
 
 Projeto de POO do Grupo 02: Kaio Veras e Emanuel Veloso. Versão enxuta, centrada no morador, para apresentar em 03/11/2026.
 
+## Baixar os aplicativos atualizados
+
+A [release 2.0.0](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.0.0) reúne o projeto completo e os aplicativos Windows x64, Mac Apple Silicon e Mac Intel, com Java incluído nos pacotes nativos. Veja [qual arquivo baixar](docs/EXECUTAVEIS.md). Extraia a pasta inteira antes de abrir o aplicativo.
+
 ## O que funciona
 
 - **Administração:** consultar condomínio; cadastrar/listar apartamentos e funcionários.

@@ -29,6 +29,8 @@ O que você encontra aqui: exemplos incrementais em Java, organizados do básico
 
 ## Trabalhos práticos
 
+[Baixar o Residencial Golden Java 2.0.0 — Windows e Mac](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.0.0).
+
 **Para consulta do professor — Grupo 02:** [documentação, orientações e diagramas](gestao-condominio/docs/entregas/2026-11-02/README.md) · [programa de Collections (item 05)](gestao-condominio/atividades/collections/App.java) · [como executar Collections](gestao-condominio/atividades/collections/README.md).
 
 | Trabalho | Descrição | Conceitos Utilizados |

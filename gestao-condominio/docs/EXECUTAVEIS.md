@@ -1,5 +1,17 @@
 # Executar a versão 2
 
+Baixe na [release 2.0.0](https://github.com/KaioVeras/POO/releases/tag/condominio-v2.0.0), seção Assets:
+
+| Arquivo | Uso |
+|---|---|
+| GoldenJava-2.0.0-windows-x64.zip | Windows Intel/AMD 64 bits; extrair e abrir GoldenJava.exe |
+| GoldenJava-2.0.0-macos-arm64.zip | Mac Apple Silicon; extrair e abrir GoldenJava.app |
+| GoldenJava-2.0.0-macos-x64.zip | Mac Intel; extrair e abrir GoldenJava.app |
+| grupo_2_projeto.zip | Código, testes, documentação, banco e JAR; requer Java 17+ para executar |
+
+Os três pacotes nativos incluem Java e não exigem Maven, servidor MySQL ou comandos para abrir. O aplicativo continua sendo a TUI. Windows/macOS podem exigir autorização por serem aplicativos sem assinatura comercial. O arquivo SHA256SUMS.txt permite conferir a integridade dos quatro ZIPs.
+
+
 No projeto compilado ou ZIP completo: Windows — duplo clique em iniciar.bat; macOS/Linux — sh iniciar.sh. É necessário Java 17+ instalado. O banco é dados/moradia.mv.db, relativo à pasta do iniciador.
 
 Para gerar um pacote com Java incluído, compile com o Maven e execute python scripts/empacotar_nativo.py no sistema de destino. Windows gera GoldenJava-2.0.0-windows-x64.zip; Mac gera o pacote correspondente ao processador. Extraia a pasta inteira. Windows: GoldenJava.exe. Mac: GoldenJava.app, que abre a TUI no Terminal.
